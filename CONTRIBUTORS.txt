@@ -1,6 +1,5 @@
 Ryan Sonnek - Original Author
-
+Michael Twentyman - Rails 4 update
 
 Complete list of contributors:
-https://github.com/socialcast/devise_oauth2_providable/contributors
-
+https://github.com/tedconf/devise_oauth2_providable/contributors
