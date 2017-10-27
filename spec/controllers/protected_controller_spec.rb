@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ProtectedController do
+describe ProtectedController, type: :controller do
 
   describe 'get :index' do
     with :client

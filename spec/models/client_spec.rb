@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Devise::Oauth2Providable::Client do
+describe Devise::Oauth2Providable::Client, type: :model do
   it { Devise::Oauth2Providable::Client.table_name.should == 'oauth2_clients' }
 
   describe 'basic client instance' do

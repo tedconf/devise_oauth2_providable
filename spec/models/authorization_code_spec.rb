@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Devise::Oauth2Providable::AuthorizationCode do
+describe Devise::Oauth2Providable::AuthorizationCode, type: :model do
   describe 'basic authorization code instance' do
     with :client
     subject do

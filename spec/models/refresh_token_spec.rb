@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe Devise::Oauth2Providable::RefreshToken do
+describe Devise::Oauth2Providable::RefreshToken, type: :model do
+
   it { Devise::Oauth2Providable::RefreshToken.table_name.should == 'oauth2_refresh_tokens' }
 
   describe 'basic refresh token instance' do

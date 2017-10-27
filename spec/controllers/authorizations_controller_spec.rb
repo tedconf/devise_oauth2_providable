@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Devise::Oauth2Providable::AuthorizationsController do
+describe Devise::Oauth2Providable::AuthorizationsController, type: :controller do
   describe 'GET #new' do
     context 'with valid redirect_uri' do
       with :user

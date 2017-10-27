@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
+describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
   describe 'POST /oauth2/token' do
     describe 'with grant_type=password' do
       context 'with valid params' do
