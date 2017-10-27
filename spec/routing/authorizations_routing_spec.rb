@@ -2,15 +2,20 @@ require 'spec_helper'
 
 describe Devise::Oauth2Providable::AuthorizationsController, type: :routing do
   describe 'routing' do
-    pending 'routes POST /oauth2/authorizations' do
-      post('/oauth2/authorizations').should route_to('devise/oauth2_providable/authorizations#create')
+    routes { Devise::Oauth2Providable::Engine.routes }
+
+    it 'routes POST /authorizations' do
+      expect(post('/authorizations'))
+        .to route_to('devise/oauth2_providable/authorizations#create')
     end
-    pending 'routes GET /oauth2/authorize' do
-      get('/oauth2/authorize').should route_to('devise/oauth2_providable/authorizations#new')
+    it 'routes GET /authorize' do
+      expect(get('/authorize'))
+        .to route_to('devise/oauth2_providable/authorizations#new')
     end
-    pending 'routes POST /oauth2/authorize' do
+    it 'routes POST /authorize' do
       #FIXME: this is valid, but the route is not being loaded into the test
-      post('/oauth2/authorize').should route_to('devise/oauth2_providable/authorizations#new')
+      expect(post('/authorize'))
+        .to route_to('devise/oauth2_providable/authorizations#new')
     end
   end
 end
