@@ -7,6 +7,7 @@ require 'pry'
 require 'rspec/rails'
 require 'shoulda-matchers'
 require 'factory_girl_rspec'
+
 FactoryGirl.definition_file_paths = [File.join(spec_root, 'factories')]
 FactoryGirl.find_definitions
 
