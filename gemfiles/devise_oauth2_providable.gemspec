@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.summary     = 'OAuth2 Provider for Rails3 applications'
   s.description = 'Rails3 engine that adds OAuth2 Provider support to any application built with Devise authentication'
 
-  s.add_runtime_dependency('rails', ['>= 4.2.0'])
+  s.add_runtime_dependency('rails', ['>= 4.1.0'])
   s.add_runtime_dependency('devise', ['>= 1.4.3'])
   s.add_runtime_dependency('rack-oauth2', ['>= 0.11.0'])
   s.add_development_dependency('rspec-rails', ['>= 2.6'])

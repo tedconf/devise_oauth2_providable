@@ -4,7 +4,7 @@ PATH
     devise_oauth2_providable (1.1.2)
       devise (>= 1.4.3)
       rack-oauth2 (>= 0.11.0)
-      rails (>= 4.2.0)
+      rails (>= 4.1.0)
 
 GEM
   remote: https://rubygems.org/
