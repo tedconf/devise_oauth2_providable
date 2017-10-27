@@ -17,8 +17,8 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 200 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(200) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           refresh_token = @refresh_token
@@ -28,7 +28,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
             :refresh_token => refresh_token.token,
             :access_token => token.token
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with expired refresh_token' do
@@ -36,7 +36,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
         with :client
         before do
           timenow = 2.days.from_now
-          Time.stub!(:now).and_return(timenow)
+          allow(Time).to receive(:now).and_return(timenow)
           @refresh_token = client.refresh_tokens.create! :user => user
           params = {
             :grant_type => 'refresh_token',
@@ -44,18 +44,18 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
             :client_secret => client.secret,
             :refresh_token => @refresh_token.token
           }
-          Time.stub!(:now).and_return(timenow + 2.months)
+          allow(Time).to receive(:now).and_return(timenow + 2.months)
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             :error => 'invalid_grant',
             :error_description => 'invalid refresh token'
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid refresh_token' do
@@ -72,8 +72,8 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           refresh_token = @refresh_token
@@ -81,7 +81,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
             :error => 'invalid_grant',
             :error_description => 'invalid refresh token'
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid client_id' do
@@ -98,14 +98,14 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             :error => 'invalid_client',
             :error_description => 'invalid client credentials'
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid client_secret' do
@@ -122,17 +122,16 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             :error => 'invalid_client',
             :error_description => 'invalid client credentials'
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
     end
   end
 end
-

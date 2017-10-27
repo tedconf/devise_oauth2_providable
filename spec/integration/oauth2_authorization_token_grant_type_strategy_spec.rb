@@ -17,8 +17,8 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 200 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(200) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           refresh_token = Devise::Oauth2Providable::RefreshToken.last
@@ -28,7 +28,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
             :refresh_token => refresh_token.token,
             :access_token => token.token
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with expired authorization_code' do
@@ -36,7 +36,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
         with :user
         before do
           timenow = 2.days.from_now
-          Time.stub!(:now).and_return(timenow)
+          allow(Time).to receive(:now).and_return(timenow)
           @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
@@ -44,18 +44,18 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
             :client_secret => client.secret,
             :code => @authorization_code.token
           }
-          Time.stub!(:now).and_return(timenow + 10.minutes)
+          allow(Time).to receive(:now).and_return(timenow + 10.minutes)
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             :error => 'invalid_grant',
             :error_description => 'invalid authorization code request'
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid authorization_code' do
@@ -72,14 +72,14 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             :error => 'invalid_grant',
             :error_description => 'invalid authorization code request'
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid client_secret' do
@@ -96,14 +96,14 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             :error => 'invalid_client',
             :error_description => 'invalid client credentials'
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid client_id' do
@@ -120,17 +120,16 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             :error => 'invalid_client',
             :error_description => 'invalid client credentials'
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
     end
   end
 end
-
