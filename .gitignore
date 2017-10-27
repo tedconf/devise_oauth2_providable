@@ -1,3 +1,6 @@
+# byebug generated
+.byebug*
+
 # rcov generated
 coverage
 
@@ -17,6 +20,7 @@ pkg
 # test files
 test/*.log
 test/*.sqlite3
+spec/support/database.yml
 
 # For vim:
 *.swp
