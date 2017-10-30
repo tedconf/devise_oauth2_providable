@@ -1,8 +1,12 @@
-for i in `ls gemfiles/Gemfile* | grep -v lock`
+base_dir=`dirname $(dirname "$0")`
+ruby_version=`cat $base_dir/.ruby-version | tr -d '\n'`
+ruby_versions='2.4.2 2.3.5 2.2.8'
+ruby_gemset=`cat $base_dir/.ruby-gemset | tr -d '\n'`
+for i in `ls $base_dir/gemfiles/Gemfile* | grep -v lock`
 do
-  for rb in '2.4.2@devise_oauth2_providable' '2.3.5@devise_oauth2_providable' '2.2.8@devise_oauth2_providable'
+  for rb in $ruby_versions
   do
     export BUNDLE_GEMFILE=$i
-    rvm $rb exec ruby --version && bundle update && rails --version && rake spec
+    rvm "$rb@$ruby_gemset" exec ruby --version && bundle update && rails --version && rake spec
   done
 done
