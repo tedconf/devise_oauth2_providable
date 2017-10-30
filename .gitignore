@@ -36,3 +36,6 @@ tmp
 log
 *.log
 *.sqlite3
+
+gemfiles/*.lock
+Gemfile.lock
