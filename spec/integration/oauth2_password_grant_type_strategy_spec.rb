@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
+describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
   describe 'POST /oauth2/token' do
     describe 'with grant_type=password' do
       context 'with valid params' do
@@ -18,12 +18,12 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 200 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(200) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           expected = token.token_response
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with valid params and client id/secret in basic auth header' do
@@ -40,13 +40,12 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
           auth_header = ActionController::HttpAuthentication::Basic.encode_credentials client.identifier, client.secret
           post '/oauth2/token', params, 'HTTP_AUTHORIZATION' => auth_header
         end
-        it { response.code.to_i.should == 200 }
-        it { response.content_type.should == 'application/json' }
+        it { expect(response.code.to_i).to eq(200) }
+        it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
-          puts response.body
           token = Devise::Oauth2Providable::AccessToken.last
           expected = token.token_response
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid client id in basic auth header' do
@@ -61,14 +60,14 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
           auth_header = ActionController::HttpAuthentication::Basic.encode_credentials 'invalid client id', client.secret
           post '/oauth2/token', params, 'HTTP_AUTHORIZATION' => auth_header
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json'  }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
             :error => "invalid_client"
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid client secret in basic auth header' do
@@ -83,14 +82,14 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
           auth_header = ActionController::HttpAuthentication::Basic.encode_credentials client.identifier, 'invalid secret'
           post '/oauth2/token', params, 'HTTP_AUTHORIZATION' => auth_header
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json'  }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
             :error => "invalid_client"
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid password' do
@@ -108,14 +107,14 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json'  }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid password authentication request",
             :error => "invalid_grant"
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid client_id' do
@@ -133,14 +132,14 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json'  }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
             :error => "invalid_client"
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
       context 'with invalid client_secret' do
@@ -158,17 +157,16 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
 
           post '/oauth2/token', params
         end
-        it { response.code.to_i.should == 400 }
-        it { response.content_type.should == 'application/json'  }
+        it { expect(response.code.to_i).to eq(400) }
+        it { expect(response.content_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
             :error => "invalid_client"
           }
-          response.body.should match_json(expected)
+          expect(response.body).to match_json(expected)
         end
       end
     end
   end
 end
-

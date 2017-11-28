@@ -1,5 +1,5 @@
 class ProtectedController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   def index
     render :nothing => true, :status => :ok
   end

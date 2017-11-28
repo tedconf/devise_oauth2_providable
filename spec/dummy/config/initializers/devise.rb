@@ -68,6 +68,9 @@ Devise.setup do |config|
   # a value less than 10 in other environments.
   config.stretches = Rails.env.test? ? 1 : 10
 
+  config.secret_key = '69f7a6307c0db3b8136d7a316b83c6ebfd619b' \
+                      '2cd6aed049e05239d4fcb98b4e1bce85ecfaf8' \
+                      'b6941fc3fb87299d85d09ac3415ab0b0f2195b4c864fd1aa48aa'
   # Setup a pepper to generate the encrypted password.
   # config.pepper = "93ff79506ade6b0ede7721989b9a4fe887fdde24c6713d8db3d18f40ca5f93f74663c7fed845665a296ecfc3aec66e6fbc7419df702d49de3af2ae05bf7231c0"
 
@@ -94,7 +97,7 @@ Devise.setup do |config|
 
   # If true, uses the password salt as remember token. This should be turned
   # to false if you are not using database authenticatable.
-  config.use_salt_as_remember_token = true
+  # config.use_salt_as_remember_token = true
 
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.
