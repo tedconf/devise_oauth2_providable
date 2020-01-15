@@ -1,6 +1,6 @@
 base_dir=`dirname $(dirname "$0")`
 ruby_version=`cat $base_dir/.ruby-version | tr -d '\n'`
-ruby_versions='2.4.2 2.3.5 2.2.8'
+ruby_versions='2.5.7 2.6.5 2.7.0'
 ruby_gemset=`cat $base_dir/.ruby-gemset | tr -d '\n'`
 for i in `ls $base_dir/gemfiles/Gemfile* | grep -v lock`
 do
