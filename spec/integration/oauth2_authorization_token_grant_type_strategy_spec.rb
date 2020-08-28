@@ -9,13 +9,13 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
         before do
           @authorization_code = user.authorization_codes.create!(:client => client, :redirect_uri => client.redirect_uri)
           params = {
-            :grant_type => 'authorization_code',
-            :client_id => client.identifier,
-            :client_secret => client.secret,
-            :code => @authorization_code.token
+            grant_type: 'authorization_code',
+            client_id: client.identifier,
+            client_secret: client.secret,
+            code: authorization_code.token
           }
 
-          post '/oauth2/token', params
+          post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(200) }
         it { expect(response.content_type).to eq('application/json') }
@@ -23,10 +23,10 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
           token = Devise::Oauth2Providable::AccessToken.last
           refresh_token = Devise::Oauth2Providable::RefreshToken.last
           expected = {
-            :token_type => 'bearer',
-            :expires_in => 899,
-            :refresh_token => refresh_token.token,
-            :access_token => token.token
+            token_type: 'bearer',
+            expires_in: 899,
+            refresh_token: refresh_token.token,
+            access_token: token.token
           }
           expect(response.body).to match_json(expected)
         end
@@ -39,21 +39,21 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
           allow(Time).to receive(:now).and_return(timenow)
           @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
           params = {
-            :grant_type => 'authorization_code',
-            :client_id => client.identifier,
-            :client_secret => client.secret,
-            :code => @authorization_code.token
+            grant_type: 'authorization_code',
+            client_id: client.identifier,
+            client_secret: client.secret,
+            code: authorization_code.token
           }
           allow(Time).to receive(:now).and_return(timenow + 10.minutes)
 
-          post '/oauth2/token', params
+          post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
         it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
-            :error => 'invalid_grant',
-            :error_description => 'invalid authorization code request'
+            error: 'invalid_grant',
+            error_description: 'invalid authorization code request'
           }
           expect(response.body).to match_json(expected)
         end
@@ -64,20 +64,20 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
         before do
           @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
           params = {
-            :grant_type => 'authorization_code',
-            :client_id => client.identifier,
-            :client_secret => client.secret,
-            :code => 'invalid'
+            grant_type: 'authorization_code',
+            client_id: client.identifier,
+            client_secret: client.secret,
+            code: 'invalid'
           }
 
-          post '/oauth2/token', params
+          post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
         it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
-            :error => 'invalid_grant',
-            :error_description => 'invalid authorization code request'
+            error: 'invalid_grant',
+            error_description: 'invalid authorization code request'
           }
           expect(response.body).to match_json(expected)
         end
@@ -88,20 +88,20 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
         before do
           @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
           params = {
-            :grant_type => 'authorization_code',
-            :client_id => client.identifier,
-            :client_secret => 'invalid',
-            :code => @authorization_code.token
+            grant_type: 'authorization_code',
+            client_id: client.identifier,
+            client_secret: 'invalid',
+            code: authorization_code.token
           }
 
-          post '/oauth2/token', params
+          post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
         it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
-            :error => 'invalid_client',
-            :error_description => 'invalid client credentials'
+            error: 'invalid_client',
+            error_description: 'invalid client credentials'
           }
           expect(response.body).to match_json(expected)
         end
@@ -112,20 +112,20 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy, type: :re
         before do
           @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
           params = {
-            :grant_type => 'authorization_code',
-            :client_id => 'invalid',
-            :client_secret => client.secret,
-            :code => @authorization_code.token
+            grant_type: 'authorization_code',
+            client_id: 'invalid',
+            client_secret: client.secret,
+            code: authorization_code.token
           }
 
-          post '/oauth2/token', params
+          post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
         it { expect(response.content_type).to eq('application/json') }
         it 'returns json' do
           expected = {
-            :error => 'invalid_client',
-            :error_description => 'invalid client credentials'
+            error: 'invalid_client',
+            error_description: 'invalid client credentials'
           }
           expect(response.body).to match_json(expected)
         end

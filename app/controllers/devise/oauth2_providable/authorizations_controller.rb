@@ -5,7 +5,7 @@ module Devise
 
       rescue_from Rack::OAuth2::Server::Authorize::BadRequest do |e|
         @error = e
-        render :error, :status => e.status
+        render :error, status: e.status
       end
 
       def new
@@ -37,11 +37,11 @@ module Devise
             if params[:approve].present?
               case req.response_type
               when :code
-                authorization_code = current_user.authorization_codes.create!(:client => @client)
+                authorization_code = current_user.authorization_codes.create!(client: @client)
                 res.code = authorization_code.token
               when :token
-                access_token = current_user.access_tokens.create!(:client => @client).token
-                bearer_token = Rack::OAuth2::AccessToken::Bearer.new(:access_token => access_token)
+                access_token = current_user.access_tokens.create!(client: @client).token
+                bearer_token = Rack::OAuth2::AccessToken::Bearer.new(access_token: access_token)
                 res.access_token = bearer_token
                 res.uid = current_user.id
               end

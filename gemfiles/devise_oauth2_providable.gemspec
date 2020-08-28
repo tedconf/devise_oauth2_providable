@@ -16,20 +16,21 @@ Gem::Specification.new do |s|
   s.authors     = ['Ryan Sonnek']
   s.email       = ['ryan@socialcast.com']
   s.homepage    = ''
-  s.summary     = 'OAuth2 Provider for Rails3 applications'
-  s.description = 'Rails3 engine that adds OAuth2 Provider support to any application built with Devise authentication'
+  s.summary     = 'OAuth2 Provider for Rails 5.2+ applications'
+  s.description = 'Rails engine that adds OAuth2 Provider support to any application built with Devise authentication'
 
-  s.add_runtime_dependency('rails', ['>= 4.1.0'])
+  s.add_runtime_dependency('rails', ['>= 5.2.0'])
   s.add_runtime_dependency('devise', ['>= 1.4.3'])
-  s.add_runtime_dependency('rack-oauth2', ['>= 0.11.0'])
-  s.add_development_dependency('rspec-rails', ['>= 2.6'])
-  s.add_development_dependency('sqlite3', ['~> 1.3'])
+  s.add_runtime_dependency('rack-oauth2', ['>= 0.11.0', '< 1.7'])
+  s.add_runtime_dependency('rack', ['< 2.1', '> 2.0'])
+  s.add_development_dependency('rspec-rails', ['>= 2.99'])
+  s.add_development_dependency('sqlite3')
   s.add_development_dependency('shoulda-matchers')
-  s.add_development_dependency('pry', ['~> 0.9.6'])
-  s.add_development_dependency('factory_girl', ['~> 2.2'])
-  s.add_development_dependency('factory_girl_rspec', ['~> 0.0.1'])
+  s.add_development_dependency('factory_bot', ['~> 4.0'])
+  s.add_development_dependency('factory_bot_rails', ['~> 4.0'])
   s.add_development_dependency('rake', ['~> 0.9.2'])
   s.add_development_dependency('test-unit')
+  s.add_development_dependency('rails-controller-testing')
   s.add_development_dependency('byebug')
 
   s.files         = `git ls-files`.split("\n")
