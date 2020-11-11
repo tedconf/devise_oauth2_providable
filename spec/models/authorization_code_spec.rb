@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe Devise::Oauth2Providable::AuthorizationCode, type: :model do
   describe 'basic authorization code instance' do
-    with :client
+    let(:client) { FactoryBot.create(:client) }
+    let(:user) { FactoryBot.create(:user) }
     subject do
-      Devise::Oauth2Providable::AuthorizationCode.create! :client => client
+      Devise::Oauth2Providable::AuthorizationCode.create! client: client, user: user
     end
     it { is_expected.to validate_presence_of :token }
     it { is_expected.to validate_uniqueness_of :token }
