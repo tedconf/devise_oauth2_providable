@@ -30,7 +30,7 @@ describe Devise::Oauth2Providable::AccessToken, type: :model do
         @refresh_token.expires_at = @soon
         @access_token = Devise::Oauth2Providable::AccessToken.create! :client => client, :refresh_token => @refresh_token
       end
-      focus 'should not set the access token expires_at to equal refresh token' do
+      it 'should not set the access token expires_at to equal refresh token' do
         expect(@access_token.expires_at).not_to eq(@later)
       end
     end
