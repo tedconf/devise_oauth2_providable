@@ -14,7 +14,7 @@ describe Devise::Oauth2Providable::AuthorizationsController, type: :controller d
       it { is_expected.to respond_with :ok }
       # it { is_expected.to respond_with_content_type :html }
       it 'should have the right content_type' do
-        expect(response.content_type.to_s)
+        expect(response.media_type.to_s)
           .to eq(Mime::Type.lookup_by_extension(:html).to_s)
       end
       # it { is_expected.to assign_to(:redirect_uri).with(redirect_uri) }
@@ -34,7 +34,7 @@ describe Devise::Oauth2Providable::AuthorizationsController, type: :controller d
       end
       it { is_expected.to respond_with :bad_request }
       it 'should have the right content_type' do
-        expect(response.content_type.to_s)
+        expect(response.media_type.to_s)
         .to eq(Mime::Type.lookup_by_extension(:html).to_s)
       end
       # it { is_expected.to respond_with_content_type :html }
