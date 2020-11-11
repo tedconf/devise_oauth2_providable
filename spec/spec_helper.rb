@@ -42,4 +42,9 @@ RSpec.configure do |config|
 end
 
 ActiveRecord::Migration.maintain_test_schema!
-ActiveRecord::MigrationContext.new(File.expand_path('dummy/db/migrate/', __dir__)).migrate
+mig_file_path = File.expand_path('dummy/db/migrate/', __dir__)
+if Rails.version <= '6.0'
+  ActiveRecord::MigrationContext.new(mig_file_path).migrate
+else
+  ActiveRecord::MigrationContext.new(mig_file_path, ActiveRecord::SchemaMigration).migrate
+end
