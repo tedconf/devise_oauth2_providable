@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
+  let(:client) { FactoryBot.create(:client) }
   describe 'POST /oauth2/token' do
     describe 'with grant_type=password' do
       context 'with valid params' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
@@ -27,7 +27,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with valid params and client id/secret in basic auth header' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
@@ -49,7 +48,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid client id in basic auth header' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           params = {
@@ -71,7 +69,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid client secret in basic auth header' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           params = {
@@ -93,7 +90,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid password' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
@@ -118,7 +114,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid client_id' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
@@ -143,7 +138,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid client_secret' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
