@@ -22,7 +22,7 @@ module Devise
         ["WWW-Authenticate"].each do |key|
           headers[key] = header[key] if header[key].present?
         end
-        if response.redirect?
+        if [301, 302, 307, 308].include?(status)
           redirect_to header['Location']
         else
           render :new

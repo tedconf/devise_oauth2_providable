@@ -21,8 +21,8 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency('rails', ['>= 5.2.0'])
   s.add_runtime_dependency('devise', ['>= 1.4.3'])
-  s.add_runtime_dependency('rack-oauth2', ['>= 0.11.0', '< 1.7'])
-  s.add_runtime_dependency('rack', ['< 2.1', '> 2.0'])
+  s.add_runtime_dependency('rack-oauth2', ['>= 0.11.0'])
+  s.add_runtime_dependency('rack', ['> 2.0'])
   s.add_development_dependency('rspec-rails', ['>= 2.99'])
   s.add_development_dependency('sqlite3')
   s.add_development_dependency('shoulda-matchers')
