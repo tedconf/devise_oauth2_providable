@@ -18,7 +18,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
           post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(200) }
-        it { expect(response.content_type).to eq('application/json') }
+        it { expect(response.media_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           refresh_token = @refresh_token
@@ -49,7 +49,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
           post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json') }
+        it { expect(response.media_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             error: 'invalid_grant',
@@ -73,7 +73,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
           post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json') }
+        it { expect(response.media_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           refresh_token = @refresh_token
@@ -99,7 +99,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
           post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json') }
+        it { expect(response.media_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             error: 'invalid_client',
@@ -123,7 +123,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy, type: :request
           post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json') }
+        it { expect(response.media_type).to eq('application/json') }
         it 'returns json' do
           expected = {
             error: 'invalid_client',

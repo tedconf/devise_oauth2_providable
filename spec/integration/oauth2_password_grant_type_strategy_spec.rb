@@ -19,7 +19,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
           post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(200) }
-        it { expect(response.content_type).to eq('application/json') }
+        it { expect(response.media_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           expected = token.token_response
@@ -41,7 +41,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
           post '/oauth2/token', params: params, headers: { 'HTTP_AUTHORIZATION' => auth_header }
         end
         it { expect(response.code.to_i).to eq(200) }
-        it { expect(response.content_type).to eq('application/json') }
+        it { expect(response.media_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           expected = token.token_response
@@ -61,7 +61,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
           post '/oauth2/token', params: params, headers: { 'HTTP_AUTHORIZATION' => auth_header }
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
@@ -83,7 +83,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
           post '/oauth2/token', params: params, headers: { 'HTTP_AUTHORIZATION' => auth_header }
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
@@ -108,7 +108,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
           post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid password authentication request",
@@ -133,7 +133,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
           post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
@@ -158,7 +158,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
           post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
