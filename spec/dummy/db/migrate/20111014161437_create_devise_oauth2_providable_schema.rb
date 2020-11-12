@@ -1,4 +1,4 @@
-class CreateDeviseOauth2ProvidableSchema < ActiveRecord::Migration
+class CreateDeviseOauth2ProvidableSchema < ActiveRecord::Migration[4.2]
   def change
     create_table :oauth2_clients do |t|
       t.string :name

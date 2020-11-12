@@ -3,10 +3,17 @@ require 'spec_helper'
 describe Devise::Oauth2Providable::AccessToken, type: :model do
   it { expect(Devise::Oauth2Providable::AccessToken.table_name).to eq('oauth2_access_tokens') }
 
+  let(:client) { FactoryBot.create(:client) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:refresh_token) { client.refresh_tokens.create! user: user }
+
   describe 'basic access token instance' do
-    with :client
     subject do
-      Devise::Oauth2Providable::AccessToken.create! :client => client
+      Devise::Oauth2Providable::AccessToken.create!(
+        client: client,
+        user: user,
+        refresh_token: refresh_token
+      )
     end
     it { is_expected.to validate_presence_of(:token) }
     it { is_expected.to validate_uniqueness_of(:token) }
@@ -23,24 +30,22 @@ describe Devise::Oauth2Providable::AccessToken, type: :model do
 
   describe '#expires_at' do
     context 'when refresh token does not expire before access token' do
-      with :client
       before do
         @later = 1.year.from_now
-        @refresh_token = client.refresh_tokens.create!
+        @refresh_token = client.refresh_tokens.create! user: user
         @refresh_token.expires_at = @soon
-        @access_token = Devise::Oauth2Providable::AccessToken.create! :client => client, :refresh_token => @refresh_token
+        @access_token = Devise::Oauth2Providable::AccessToken.create! client: client, refresh_token: @refresh_token, user: user
       end
-      focus 'should not set the access token expires_at to equal refresh token' do
+      it 'should not set the access token expires_at to equal refresh token' do
         expect(@access_token.expires_at).not_to eq(@later)
       end
     end
     context 'when refresh token expires before access token' do
-      with :client
       before do
         @soon = 1.minute.from_now
-        @refresh_token = client.refresh_tokens.create!
+        @refresh_token = client.refresh_tokens.create! user: user
         @refresh_token.expires_at = @soon
-        @access_token = Devise::Oauth2Providable::AccessToken.create! :client => client, :refresh_token => @refresh_token
+        @access_token = Devise::Oauth2Providable::AccessToken.create! client: client, refresh_token: @refresh_token, user: user
       end
       it 'should set the access token expires_at to equal refresh token' do
         expect(@access_token.expires_at).to eq(@soon)

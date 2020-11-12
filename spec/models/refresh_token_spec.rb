@@ -5,9 +5,10 @@ describe Devise::Oauth2Providable::RefreshToken, type: :model do
   it { expect(Devise::Oauth2Providable::RefreshToken.table_name).to eq('oauth2_refresh_tokens') }
 
   describe 'basic refresh token instance' do
-    with :client
+    let(:user) { FactoryBot.create(:user) }
+    let(:client) { FactoryBot.create(:client) }
     subject do
-      Devise::Oauth2Providable::RefreshToken.create! :client => client
+      Devise::Oauth2Providable::RefreshToken.create! client: client, user: user
     end
     it { is_expected.to validate_presence_of :token }
     it { is_expected.to validate_uniqueness_of :token }

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
+  let(:client) { FactoryBot.create(:client) }
   describe 'POST /oauth2/token' do
     describe 'with grant_type=password' do
       context 'with valid params' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
@@ -16,10 +16,10 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
             :password => 'test'
           }
 
-          post '/oauth2/token', params
+          post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(200) }
-        it { expect(response.content_type).to eq('application/json') }
+        it { expect(response.media_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           expected = token.token_response
@@ -27,7 +27,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with valid params and client id/secret in basic auth header' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
@@ -38,10 +37,10 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
           }
 
           auth_header = ActionController::HttpAuthentication::Basic.encode_credentials client.identifier, client.secret
-          post '/oauth2/token', params, 'HTTP_AUTHORIZATION' => auth_header
+          post '/oauth2/token', params: params, headers: { 'HTTP_AUTHORIZATION' => auth_header }
         end
         it { expect(response.code.to_i).to eq(200) }
-        it { expect(response.content_type).to eq('application/json') }
+        it { expect(response.media_type).to eq('application/json') }
         it 'returns json' do
           token = Devise::Oauth2Providable::AccessToken.last
           expected = token.token_response
@@ -49,7 +48,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid client id in basic auth header' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           params = {
@@ -58,10 +56,10 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
             :password => 'test'
           }
           auth_header = ActionController::HttpAuthentication::Basic.encode_credentials 'invalid client id', client.secret
-          post '/oauth2/token', params, 'HTTP_AUTHORIZATION' => auth_header
+          post '/oauth2/token', params: params, headers: { 'HTTP_AUTHORIZATION' => auth_header }
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
@@ -71,7 +69,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid client secret in basic auth header' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           params = {
@@ -80,10 +77,10 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
             :password => 'test'
           }
           auth_header = ActionController::HttpAuthentication::Basic.encode_credentials client.identifier, 'invalid secret'
-          post '/oauth2/token', params, 'HTTP_AUTHORIZATION' => auth_header
+          post '/oauth2/token', params: params, headers: { 'HTTP_AUTHORIZATION' => auth_header }
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
@@ -93,7 +90,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid password' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
@@ -105,10 +101,10 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
             :password => 'bar'
           }
 
-          post '/oauth2/token', params
+          post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid password authentication request",
@@ -118,7 +114,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid client_id' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
@@ -130,10 +125,10 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
             :password => 'test'
           }
 
-          post '/oauth2/token', params
+          post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
@@ -143,7 +138,6 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
         end
       end
       context 'with invalid client_secret' do
-        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
@@ -155,10 +149,10 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy, type: :request do
             :password => 'test'
           }
 
-          post '/oauth2/token', params
+          post '/oauth2/token', params: params
         end
         it { expect(response.code.to_i).to eq(400) }
-        it { expect(response.content_type).to eq('application/json')  }
+        it { expect(response.media_type).to eq('application/json')  }
         it 'returns json' do
           expected = {
             :error_description => "invalid client credentials",
